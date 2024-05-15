@@ -12,4 +12,8 @@
   &.player2 {
     background-color: blue;
   }
+
+  &.player3 {
+    background-color: yellow;
+  }
 }

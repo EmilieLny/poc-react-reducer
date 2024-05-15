@@ -10,13 +10,16 @@ const ACTIONS = {
 const reducer = (state, actions) => {
   switch (actions.type) {
     case ACTIONS.INIT:
-      return { grid: new Array(9).fill(0), winningCell: 3, player: 1 };
+      return { grid: new Array(9).fill(0), winningCell: 3, player: 1, won: false };
     case ACTIONS.PLAY:
       let updatedGrid = [...state.grid];
       updatedGrid[actions.payload.cellIndex] = state.player;
       const updatedPlayer = state.player === 1 ? 2 : 1;
       return { ...state, player: updatedPlayer, grid: updatedGrid }
     case ACTIONS.WON:
+      let finalGrid = [...state.grid];
+      finalGrid[actions.payload.cellIndex] = 3;
+      return { ...state, grid: finalGrid, won: true }
     default:
       return state
   }
@@ -31,20 +34,25 @@ function App() {
   });
 
   const onClickCell = (cellIndex) => {
-    dispatch({ type: ACTIONS.PLAY, payload: { cellIndex } })
+    dispatch({
+      type: cellIndex === state.winningCell ? ACTIONS.WON : ACTIONS.PLAY,
+      payload: { cellIndex }
+    })
   }
 
   return (
     <div className='grid'>
-      {state.grid.map((cell, i) => <Cell key={i} onClickCell={() => onClickCell(i)} cell={cell} />)}
+      {state.grid.map((cell, i) => <Cell key={i} onClickCell={() => onClickCell(i)} cell={cell} disabled={cell !== 0 || state.won} />)}
     </div>
   );
 }
 
 
-const Cell = ({ onClickCell, cell }) => {
+const Cell = ({ onClickCell, cell, disabled }) => {
   let className = cell ? `cell player${cell}` : 'cell';
-  return <button className={className} onClick={onClickCell} disabled={cell !== 0} >{cell}</button>
+  let text = cell ? `Player ${cell}` : 'Click me!';
+  text = cell < 3 ? text : `WIN!!`
+  return <button className={className} onClick={onClickCell} disabled={disabled} >{text}</button>
 }
 
 export default App;
