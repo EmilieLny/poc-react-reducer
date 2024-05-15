@@ -1,6 +1,5 @@
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import './App.css';
-import { type } from '@testing-library/user-event/dist/type';
 
 const ACTIONS = {
   INIT: 'init',
@@ -13,7 +12,6 @@ const reducer = (state, actions) => {
     case ACTIONS.INIT:
       return { grid: new Array(9).fill(0), winningCell: 3, player: 1 };
     case ACTIONS.PLAY:
-      console.log('hey')
       let updatedGrid = [...state.grid];
       updatedGrid[actions.payload.cellIndex] = state.player;
       const updatedPlayer = state.player === 1 ? 2 : 1;
