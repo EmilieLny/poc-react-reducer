@@ -31,15 +31,20 @@ function App() {
   });
 
   const onClickCell = (cellIndex) => {
-
     dispatch({ type: ACTIONS.PLAY, payload: { cellIndex } })
   }
 
   return (
     <div className='grid'>
-      {state.grid.map((cell, i) => <div className='cell' key={i} onClick={() => onClickCell(i)} >{cell}</div>)}
+      {state.grid.map((cell, i) => <Cell key={i} onClickCell={() => onClickCell(i)} cell={cell} />)}
     </div>
   );
+}
+
+
+const Cell = ({ onClickCell, cell }) => {
+  let className = cell ? `cell player${cell}` : 'cell';
+  return <button className={className} onClick={onClickCell} disabled={cell !== 0} >{cell}</button>
 }
 
 export default App;

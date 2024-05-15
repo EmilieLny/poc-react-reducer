@@ -5,5 +5,11 @@
 }
 
 .cell {
-  border: 1px solid black;
+  &.player1 {
+    background-color: red;
+  }
+
+  &.player2 {
+    background-color: blue;
+  }
 }
