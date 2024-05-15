@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import './App.css';
 
 const ACTIONS = {
@@ -10,7 +10,8 @@ const ACTIONS = {
 const reducer = (state, actions) => {
   switch (actions.type) {
     case ACTIONS.INIT:
-      return { grid: new Array(9).fill(0), winningCell: 3, player: 1, won: false };
+      const random = Math.floor(Math.random() * 8)
+      return { grid: new Array(9).fill(0), winningCell: random, player: 1, won: false };
     case ACTIONS.PLAY:
       let updatedGrid = [...state.grid];
       updatedGrid[actions.payload.cellIndex] = state.player;
@@ -23,15 +24,22 @@ const reducer = (state, actions) => {
     default:
       return state
   }
-
 }
 
 function App() {
   const [state, dispatch] = useReducer(reducer, {
     grid: new Array(9).fill(0),
-    winningCell: 3,
+    winningCell: 0,
     player: 1
   });
+
+  useEffect(() => {
+    initGame()
+  }, [])
+
+  const initGame = () => {
+    dispatch({ type: ACTIONS.INIT })
+  }
 
   const onClickCell = (cellIndex) => {
     dispatch({
@@ -41,9 +49,13 @@ function App() {
   }
 
   return (
-    <div className='grid'>
-      {state.grid.map((cell, i) => <Cell key={i} onClickCell={() => onClickCell(i)} cell={cell} disabled={cell !== 0 || state.won} />)}
-    </div>
+    <>
+      <button onClick={initGame}>REST</button>
+      <div className='grid'>
+        {state.grid.map((cell, i) => <Cell key={i} onClickCell={() => onClickCell(i)} cell={cell} disabled={cell !== 0 || state.won} />)}
+      </div>
+    </>
+
   );
 }
 
