@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import './App.css';
 
 const ACTIONS = {
@@ -7,11 +7,13 @@ const ACTIONS = {
   WON: 'won'
 }
 
+const initState = { grid: new Array(9).fill(0), winningCell: null, player: 1, won: false };
+
 const reducer = (state, actions) => {
   switch (actions.type) {
     case ACTIONS.INIT:
-      const random = Math.floor(Math.random() * 8)
-      return { grid: new Array(9).fill(0), winningCell: random, player: 1, won: false };
+      const winningCell = Math.floor(Math.random() * 8)
+      return { ...initState, winningCell };
     case ACTIONS.PLAY:
       let updatedGrid = [...state.grid];
       updatedGrid[actions.payload.cellIndex] = state.player;
@@ -27,15 +29,14 @@ const reducer = (state, actions) => {
 }
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, {
-    grid: new Array(9).fill(0),
-    winningCell: 0,
-    player: 1
-  });
-
-  useEffect(() => {
-    initGame()
-  }, [])
+  const [state, dispatch] = useReducer(
+    reducer,
+    initState,
+    (state) => {
+      const random = Math.floor(Math.random() * 8)
+      return { ...state, winningCell: random }
+    }
+  );
 
   const initGame = () => {
     dispatch({ type: ACTIONS.INIT })
