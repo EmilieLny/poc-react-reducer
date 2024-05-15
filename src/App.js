@@ -9,10 +9,11 @@ const ACTIONS = {
 }
 
 const reducer = (state, actions) => {
-  switch (actions) {
+  switch (actions.type) {
     case ACTIONS.INIT:
       return { grid: new Array(9).fill(0), winningCell: 3, player: 1 };
     case ACTIONS.PLAY:
+      console.log('hey')
       let updatedGrid = [...state.grid];
       updatedGrid[actions.payload.cellIndex] = state.player;
       const updatedPlayer = state.player === 1 ? 2 : 1;
@@ -32,6 +33,7 @@ function App() {
   });
 
   const onClickCell = (cellIndex) => {
+
     dispatch({ type: ACTIONS.PLAY, payload: { cellIndex } })
   }
 
