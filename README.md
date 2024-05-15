@@ -2,6 +2,21 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Exercise
+
+Design and implement a game for two players with the following specifications:
+
+- The game board consists of a 3x3 grid.
+- Before the game starts, a winning cell is randomly determined without being revealed on the screen.
+- Players take turns, alternating between Player 1 and Player 2, placing their dots within each cell of the grid.
+- The player who successfully places their dot in the winning cell is declared the winner.
+- The game should include a "Reset" button that allows both players to restart the game at any time.
+
+Extensions:
+
+- Scoreboard to keep track of all-time scores of two players
+- Countdown Timer for Action
+
 ## Available Scripts
 
 In the project directory, you can run:
