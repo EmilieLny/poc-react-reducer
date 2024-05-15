@@ -50,7 +50,7 @@ function App() {
 
   return (
     <>
-      <button onClick={initGame}>REST</button>
+      <button onClick={initGame}>Reset</button>
       <div className='grid'>
         {state.grid.map((cell, i) => <Cell key={i} onClickCell={() => onClickCell(i)} cell={cell} disabled={cell !== 0 || state.won} />)}
       </div>
