@@ -54,6 +54,7 @@ function App() {
       <div className='grid'>
         {state.grid.map((cell, i) => <Cell key={i} onClickCell={() => onClickCell(i)} cell={cell} disabled={cell !== 0 || state.won} />)}
       </div>
+      {state.won && <h3>Player {state.player} won the game!</h3>}
     </>
 
   );
